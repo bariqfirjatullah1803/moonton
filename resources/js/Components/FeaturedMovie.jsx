@@ -17,7 +17,7 @@ export default function FeaturedMovie({slug, name, category, thumbnail, rating =
         <div className="rating absolute top-0 left-0">
             <div className="p-[30px] flex items-center gap-1">
                 <img src="/icons/ic_star.svg" alt=""/>
-                <span className="text-sm font-medium text-white mt-1">{rating.toFixed(1)}/5.0</span>
+                <span className="text-sm font-medium text-white mt-1">{rating.toFixed(1)}</span>
             </div>
         </div>
         {/*bottom detail */}

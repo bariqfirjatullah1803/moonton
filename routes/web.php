@@ -24,10 +24,11 @@ use Inertia\Inertia;
 //        'phpVersion' => PHP_VERSION,
 //    ]);
 //});
-Route::redirect('/','/prototype/login');
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::redirect('/','/login');
+
+Route::middleware(['auth','role:user'])->prefix('dashboard')->name('user.dashboard.')->group(function (){
+    Route::get('/',[\App\Http\Controllers\User\DashboardController::class,'index'])->name('index');
+});
 
 Route::prefix('prototype')->name('prototype.')->group(function(){
     Route::get('/login', function(){
@@ -47,10 +48,10 @@ Route::prefix('prototype')->name('prototype.')->group(function(){
     })->name('movie.show');
 });
 
-//Route::middleware('auth')->group(function () {
-//    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-//});
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 require __DIR__ . '/auth.php';
