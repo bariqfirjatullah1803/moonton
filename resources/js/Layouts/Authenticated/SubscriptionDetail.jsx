@@ -15,12 +15,12 @@ export default function SubscriptionDetail({name, isPremium, remainingActiveDays
     return (<>
         {/*Basic*/}
         {!isPremium && (<div className="mt-auto pr-[30px]">
-            <div className="p-5 bg-white rounded-[25px] outline outline-1 outline-[#f1f1f1]">
+            <div className="p-5 bg-white drop-shadow-lg rounded-[25px] outline outline-1 outline-[#f1f1f1]">
                 <div className="text-black text-lg font-semibold mb-8">
                     {name}
                 </div>
                 <div className="text-black text-sm mb-2">
-                    {remainingActiveDays} of {activeDays} hari
+                    {remainingActiveDays} of {activeDays} day
                 </div>
                 <div className="rounded-full w-full h-[6px] bg-[#f1f1f1]">
                     <div className="rounded-full h-full w-2/12 bg-alerange"></div>
@@ -36,7 +36,7 @@ export default function SubscriptionDetail({name, isPremium, remainingActiveDays
                     {name}
                 </div>
                 <div className="text-white text-sm mb-2">
-                    {remainingActiveDays} of {activeDays} hari
+                    {remainingActiveDays} of {activeDays} day
                 </div>
                 <div className="rounded-full w-full h-[6px] bg-[#333333]">
                     <div className={`rounded-full h-full bg-alerange ${loadingProgress()}`}></div>
