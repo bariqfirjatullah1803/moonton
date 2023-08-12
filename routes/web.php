@@ -20,17 +20,9 @@ use App\Http\Controllers\Admin\MovieController as AdminMovieController;
 |
 */
 
-//Route::get('/', function () {
-//    return Inertia::render('Welcome', [
-//        'canLogin' => Route::has('login'),
-//        'canRegister' => Route::has('register'),
-//        'laravelVersion' => Application::VERSION,
-//        'phpVersion' => PHP_VERSION,
-//    ]);
-//});
 Route::redirect('/', '/login');
 
-Route::middleware(['auth', 'role:admin'])->prefix('dashboard')->name('user.dashboard.')->group(function () {
+Route::middleware(['auth', 'role:user'])->prefix('dashboard')->name('user.dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
 
     Route::get('movie/{movie:slug}', [MovieController::class, 'show'])->name('movie.show')->middleware('checkUserSubscription:true');
@@ -40,6 +32,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('dashboard')->name('user.dashb
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.dashboard.')->group(function () {
+    Route::put('movie/{movie}/restore',[AdminMovieController::class,'restore'])->name('movie.restore');
     Route::resource('movie', AdminMovieController::class);
 });
 

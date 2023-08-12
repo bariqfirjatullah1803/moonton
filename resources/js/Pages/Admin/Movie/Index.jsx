@@ -1,15 +1,16 @@
 import Authenticated from "@/Layouts/Authenticated/Index.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
-import {Head, Link} from "@inertiajs/react";
+import {Head, Link, useForm} from "@inertiajs/react";
 import FlashMessage from "@/Components/FlashMessage.jsx";
 
 export default function Index({auth, flashMessage, movies}) {
+    const {delete: destroy, put} = useForm();
     return (
         <>
             <Authenticated auth={auth}>
                 <Head title={'Admin - List Movie'}/>
                 <Link href={route('admin.dashboard.movie.create')}>
-                    <PrimaryButton type={'button'} className={'w-40 mb-8'}>Insert New Movie</PrimaryButton>
+                    <PrimaryButton type={'button'} className={'!w-40 mb-8'}>Insert New Movie</PrimaryButton>
                 </Link>
                 {flashMessage?.message && (
                     <FlashMessage message={flashMessage.message}/>
@@ -47,10 +48,20 @@ export default function Index({auth, flashMessage, movies}) {
                                         Edit
                                     </PrimaryButton>
                                 </Link>
-                                <PrimaryButton type={'button'}
-                                               variant={'danger'}>
-                                    Delete
-                                </PrimaryButton>
+                            </td>
+                            <td>
+                                <div onClick={() => {
+                                    movie.deleted_at
+                                        ? put(route('admin.dashboard.movie.restore', movie.id))
+                                        : destroy(route('admin.dashboard.movie.destroy', movie.id))
+                                }}>
+                                    <PrimaryButton type={'button'} variant={'danger'}>
+                                        {movie.deleted_at
+                                            ? 'Restore'
+                                            : 'Delete'
+                                        }
+                                    </PrimaryButton>
+                                </div>
                             </td>
                         </tr>
                     ))}
